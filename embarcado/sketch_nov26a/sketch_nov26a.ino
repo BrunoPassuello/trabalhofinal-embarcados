@@ -69,7 +69,6 @@ void loop() {
     digitalWrite(led1, HIGH);
     servoMotor.write(180);
     
-    // ← NOVO: Registra abertura da cancela apenas uma vez
     if (!abertura_registrada) {
       send_abertura();
       abertura_registrada = true;
@@ -78,8 +77,7 @@ void loop() {
     novo_estado_led = LOW;
     digitalWrite(led1, LOW);
     servoMotor.write(0);
-    abertura_registrada = false; // ← Reseta para próxima abertura
-  }
+    abertura_registrada = false; 
 
   if (novo_estado_led != ultimo_estado_led) {
     send_light_update(novo_estado_led);
@@ -152,7 +150,6 @@ void send_light_update(int light_state) {
   }
 }
 
-// ← NOVA FUNÇÃO: registra abertura da cancela
 void send_abertura() {
   if (WiFi.status() == WL_CONNECTED) {
     WiFiClient client;
